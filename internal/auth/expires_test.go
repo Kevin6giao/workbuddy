@@ -1,6 +1,7 @@
 package auth
 
 import (
+	"fmt"
 	"testing"
 	"time"
 )
@@ -8,6 +9,10 @@ import (
 // TestParseNormalizesOfficialCLIExpiresAt 覆盖官方 CLI 凭据文件的导入：
 // 官方写 expiresAt 为**毫秒**，本仓内部按 Unix 秒。不归一会让到期时间落到公元
 // 58800 年 → NeedsRefresh 恒 false → token 永不刷新 → 到期后账号静默 401。
+//
+// 固定夹具（2026-10-24 的真机凭据）只用来验「毫秒 → 秒」的归一与域判定；
+// 到期窗口和 NeedsRefresh 改用运行时生成的 expiresAt 验，否则夹具一过有效期
+// 这条测试就天天变红（2026-11-21 之后即是如此），与代码对错无关。
 func TestParseNormalizesOfficialCLIExpiresAt(t *testing.T) {
 	// 取自真实官方凭据文件（2026-10-24，www.codebuddy.ai）。
 	const cliMillis = 1795254516410
@@ -25,16 +30,31 @@ func TestParseNormalizesOfficialCLIExpiresAt(t *testing.T) {
 	if a.ExpiresAt != wantSec {
 		t.Errorf("ExpiresAt=%d want %d（毫秒未归一）", a.ExpiresAt, wantSec)
 	}
-	// 归一后必须落在合理区间：距今不到 1 年（官方 expiresIn 约 28 天）。
-	if d := time.Until(time.Unix(a.ExpiresAt, 0)); d <= 0 || d > 400*24*time.Hour {
-		t.Errorf("归一后到期时间不合理：%v（now+%v）", time.Unix(a.ExpiresAt, 0), d)
-	}
 	// 官方国际站域必须判 global（否则错域路由）。
 	if got := a.Realm(); got != "global" {
 		t.Errorf("Realm()=%q want global", got)
 	}
+
+	// 动态夹具：expiresAt 取「现在 + 28 天」的毫秒值（官方 expiresIn 约 28 天）。
+	fresh := time.Now().Add(28 * 24 * time.Hour).UnixMilli()
+	rawFresh := []byte(fmt.Sprintf(`{
+		"account": {"uid":"00000000-0000-4000-8000-000000000001","nickname":"misakano7545","uin":"000000000000"},
+		"auth": {"accessToken":"at","refreshToken":"rt","expiresAt":%d,
+		         "domain":"www.codebuddy.ai","tokenType":"Bearer","expiresIn":2418995}
+	}`, fresh))
+	b, err := Parse(rawFresh)
+	if err != nil {
+		t.Fatalf("Parse(dynamic): %v", err)
+	}
+	if wantFreshSec := fresh / 1000; b.ExpiresAt != wantFreshSec {
+		t.Errorf("ExpiresAt=%d want %d（毫秒未归一）", b.ExpiresAt, wantFreshSec)
+	}
+	// 归一后必须落在合理区间：距今不到 1 年。
+	if d := time.Until(time.Unix(b.ExpiresAt, 0)); d <= 0 || d > 400*24*time.Hour {
+		t.Errorf("归一后到期时间不合理：%v（now+%v）", time.Unix(b.ExpiresAt, 0), d)
+	}
 	// NeedsRefresh：28 天后到期的 token 现在不该被要求刷新。
-	if a.NeedsRefresh(time.Hour) {
+	if b.NeedsRefresh(time.Hour) {
 		t.Error("NeedsRefresh=true，说明到期时间仍被当成毫秒（未来过远）或已过期")
 	}
 }
