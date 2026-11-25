@@ -68,32 +68,32 @@ jobs:
           done
 
       # ponytail: 四个 upload，每个系统架构一个 artifact。matrix 等构建时间不够再用。
-      - uses: actions/upload-artifact@v5
+      - uses: actions/upload-artifact@v6
         with:
           name: wb2api-panel-${{ env.VERSION }}-windows-amd64
           path: dist/windows-amd64
           if-no-files-found: error
-      - uses: actions/upload-artifact@v5
+      - uses: actions/upload-artifact@v6
         with:
           name: wb2api-panel-${{ env.VERSION }}-windows-arm64
           path: dist/windows-arm64
           if-no-files-found: error
-      - uses: actions/upload-artifact@v5
+      - uses: actions/upload-artifact@v6
         with:
           name: wb2api-panel-${{ env.VERSION }}-linux-amd64
           path: dist/linux-amd64
           if-no-files-found: error
-      - uses: actions/upload-artifact@v5
+      - uses: actions/upload-artifact@v6
         with:
           name: wb2api-panel-${{ env.VERSION }}-linux-arm64
           path: dist/linux-arm64
           if-no-files-found: error
-      - uses: actions/upload-artifact@v5
+      - uses: actions/upload-artifact@v6
         with:
           name: wb2api-panel-${{ env.VERSION }}-darwin-amd64
           path: dist/darwin-amd64
           if-no-files-found: error
-      - uses: actions/upload-artifact@v5
+      - uses: actions/upload-artifact@v6
         with:
           name: wb2api-panel-${{ env.VERSION }}-darwin-arm64
           path: dist/darwin-arm64

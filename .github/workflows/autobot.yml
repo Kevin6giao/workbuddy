@@ -170,7 +170,7 @@ jobs:
       - name: 报告进 job summary
         if: always()
         run: cat autobot-report.md >> "$GITHUB_STEP_SUMMARY" 2>/dev/null || true
-      - uses: actions/upload-artifact@v5
+      - uses: actions/upload-artifact@v6
         if: always()
         with:
           name: reports-${{ strategy.job-index }}
@@ -247,7 +247,7 @@ jobs:
           echo "--- 产物:"; cat /tmp/hermes-selftest.txt 2>/dev/null || echo "(没有产物)"
           test -f /tmp/hermes-selftest.txt
 
-      - uses: actions/download-artifact@v5
+      - uses: actions/download-artifact@v7
         if: inputs.reports_run == ''
         with:
           path: /tmp/artifacts
