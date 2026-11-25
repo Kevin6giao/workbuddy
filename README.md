@@ -16,39 +16,15 @@
   <img alt="License" src="https://img.shields.io/badge/License-MIT-green?style=flat-square">
 </p>
 
----
+<p align="center">
+  <a href="https://github.com/Kevin6giao/workbuddy/actions/workflows/binaries.yml"><img alt="binaries" src="https://github.com/Kevin6giao/workbuddy/actions/workflows/binaries.yml/badge.svg?branch=main"></a>
+  <a href="https://github.com/Kevin6giao/workbuddy/actions/workflows/docker-ghcr.yml"><img alt="docker-ghcr" src="https://github.com/Kevin6giao/workbuddy/actions/workflows/docker-ghcr.yml/badge.svg?branch=main"></a>
+</p>
 
-> **本项目是 [Sliverkiss/workbuddy2api](https://github.com/Sliverkiss/workbuddy2api) 的增强分支**（fork）。
-> 在上游基础上重构了可视化运维层；对上游的同步止于其停更前的最后一次更新（`ea8b1e5`），此后由本分支独立演进。
-> 差异概览见 [与上游的差异](#-与上游的差异)；上游设计的精巧之处（账号池调度、错误分类、提示词体系）原样保留，详见下文与上游 README。
->
-> 感谢 [linguo2625469/workbuddy2api-panel](https://github.com/linguo2625469/workbuddy2api-panel/)，以及原仓库删库后的延续 [HanawaBanana/workbuddy2api](https://github.com/HanawaBanana/workbuddy2api)。
-
-> [!IMPORTANT]
-> **本仓的源头 [Sliverkiss/workbuddy2api](https://github.com/Sliverkiss/workbuddy2api) 早已删库停更**：原仓库连同代码、issue 与提交历史整体消失，不再可访问。本仓属于那次删库之后延续下来的分支，链路为 `Sliverkiss/workbuddy2api` → `linguo2625469/workbuddy2api-panel` → 本仓，**中间每一环都没有官方支持与后续保障**。
->
-> **本仓的直接上游 [linguo2625469/workbuddy2api-panel](https://github.com/linguo2625469/workbuddy2api-panel) 已于 2026-10-21 宣布停止维护**：不再更新代码、不跟进上游变化、不再处理新的 issue / PR。原话给出的原因是上游开始禁用反代、作者精力有限，以及批量小号 / 售卖额度的滥用。
->
-> 本仓不是它的官方延续，是自用增强分支，**仍在按自己的节奏维护**——已合入的修复不回退，问题与 PR 在本仓处理。
->
-> **维护方式披露**：本仓的 issue / PR 处置、代码审查、测试与修复实现由 **Ekko Studio + Hermes Agent**（AI 编码 agent）辅助完成，合并与发布决策由维护者本人作出。这与上游停更前一贯的披露方式相同，请知悉后再使用或参与贡献。
->
-> **关于作者与维护节奏**：本仓作者现实身份是一名在读大学生、摄影爱好者，也是玉林市公共汽车公司的公交迷。因家庭经济困难，周末需兼职于玉林市某公司从事相关工作，业余还有自己的兴趣与生活。**这不代表作者有全部精力投入维护**——本项目是兴趣驱动，更新随缘、响应不定，可能出现较长时间没有提交；也请不要把它当作有 SLA 的商业项目或有求必应的服务。作者没有跑路，只是精力有限，看到的问题会在有余力时处理。
->
-> 尽管时间有限，作者仍保有一部分精力用于维护本项目——在自己的电脑上对相关请求做抓包分析（自有设备、本人账号），据此定位并修复接口变化。**感谢上游仓库及相关维护者，在作者最艰难的时期仍给予支持、陪着这个项目继续开发；也感谢腾讯 WorkBuddy 提供的相关服务。**
->
-> **AutoBot CI（开发中）**：本仓正在开发 `.github/workflows/autobot.yml` + 根目录 `AutoBot.yml`——每天定时 clone 一批同类实现（含本仓上游与其他参考仓库），由 agent 读代码写差异报告，再按报告写 Go 实现并开 PR。**该流水线目前处于开发阶段**：分片策略、报告质量与自动 PR 的筛选规则都还在调整，可能误报、漏报、开出需要人工打回的 PR，请勿把它的产出当作既成能力依赖；稳定性与信任度以后续说明为准。
->
-> 风险自评：**上游随时可能彻底收紧导致通道不可用**；因使用非官方客户端导致的账号风控 / 封禁，由使用者自行承担。
-
-> [!WARNING]
-> **郑重提醒**——这段话针对两类人：**现实中与作者同校的使用者**，以及**拿本项目搭建对外中转站、做批量小号 / 售卖额度等恶意滥用的人**。
->
-> 作者无法追踪、也不会去追踪任何人的行为，不对任何人行使监控。但必须把话说清楚：上述用法**严重违背上游项目作者与维护者的初衷**，也是消耗本仓作者维护动力的最大来源——本项目免费、开源、由一名学生用课余时间维护，不是给任何人拿去转卖的资源。
->
-> 如果哪一天这个项目**确确实实让作者心力憔悴、不再有动力维护，本仓会像上游那样停止维护**，且不另行通知。上游的今天，可能就是本仓的明天，请自重。
->
-> 同样的底线也适用于**同校使用者**：若有人出于一己私利，或以作者无法理解、也不知情的行为，把本项目的情况反映到**学校信息中心**、作者所在的**二级学院**，乃至**学院院长与校方其他上级领导**，藉此换取奖学金等个人好处，**本仓也会同时停止维护**。这不是赌气——接受核查、说明与后续处理所占用的时间与心力，已经超出本仓能承受的维护成本。
+> **这是衍生分支。** 本仓库 [`Kevin6giao/workbuddy`](https://github.com/Kevin6giao/workbuddy) 基于
+> 面板版 [`misakano7545/workbuddy2api-panel`](https://github.com/misakano7545/workbuddy2api-panel)，
+> 而它又源自 [`Sliverkiss/workbuddy2api`](https://github.com/Sliverkiss/workbuddy2api)（MIT，原始版权声明保留在 [LICENSE](LICENSE)）。
+> 本分支在面板版之上加了**提示词预设层**、**注入自检探针**、**11128 内容拦截抢救链**与**抢救轨迹可观测**等改动，见[本仓库（衍生说明）](#本仓库衍生说明)。
 
 ## 项目简介
 
@@ -59,6 +35,61 @@ WorkBuddy2API 是一个自托管的 **OpenAI 兼容反向代理网关**，将腾
 - 对客户端暴露 `chat_completions`、`codex_responses` 与 `anthropic_messages`。模型名原样交给上游，不把 `claude-*` 改写成别的模型。
 
 > ⚠️ 合规须知：本项目是**非官方**网关，使用 CodeBuddy 账号作为上游，**仅限本人授权账号、本机 / 私有环境测试**。详细边界见[安全与合规](#安全与合规)。
+
+## 本仓库（衍生说明）
+
+```
+Sliverkiss/workbuddy2api              MIT，网关本体（原始版权见 LICENSE）
+      └─ misakano7545/workbuddy2api-panel   加 Web 面板 / 任务体系 / 媒体端点 / MCP
+              └─ Kevin6giao/workbuddy       本仓库：提示词预设层 + 注入自检 + 抢救轨迹
+```
+
+本仓库的历史被压成**单条提交**，`git log` 里看不到上游的逐条演进；署名与许可仍以 [LICENSE](LICENSE) 为准，`upstream` remote 保留用于比对（`git diff upstream/main` 可看出本分支相对面板版的全部改动）。
+
+### 本分支增量（相对 `misakano7545/workbuddy2api-panel`）
+
+| 能力 | 说明 |
+|---|---|
+| **提示词预设层** | `internal/prompt`（655 行）：把"出站用哪段 system"从全局单值升级为「预设对象 + 按 bareModel 绑定 + 热生效」。落盘 `data/prompts/presets.json` 与 `bindings.json`（原子写；文件损坏只告警、退回内置集，不拦启动）。按模型绑定而不是全局一份，是因为同一 bareModel 在不同渠道下需要不同预设 |
+| **预设导入适配** | `POST /panel/api/presets/import`：把站内互不兼容的预设格式（dsh-inject / agent-purge / Keysmith 三种写法）统一收口进本仓结构 |
+| **11128 内容拦截抢救链** | `prompt.degrade_steps`（默认 `split → move → rewrite`，**不允许 `rotate_account`**——11128 是内容问题，换号必然撞同一审核）。每层都过、仍被拦才算「用户内容本身触发审核」，此时不再空转换号 |
+| **注入自检探针** | `POST /panel/api/prompt/probe`（`{"model":"…"}`）：发一条最短请求（正文「你是？」、`max_tokens` 默认 64），走**与真实流量完全相同的出站路径**（同一 PromptMode、同一绑定、同一 body 组装），回答「预设到底有没有进到上游」。不落请求归档，不污染面板统计 |
+| **抢救轨迹可观测** | 请求归档与运行日志新增 `prompt_mode` / `preset_id` / `binding_scope` / `degrade_stage` / `upstream_code` 五个字段：`stage=none + code=11128` 说明三层都没动过（结构不适用），`stage=rewrite` 说明已换成中性句仍被拦。只记 `prompt_mode` 时，「没绑定」和「绑定但预设被禁用」长得一模一样 |
+| **本机启动/停机脚本** | `启动网关.cmd`（`%~dp0` 定位、无绝对路径、端口已监听则只开面板）、`关闭网关.cmd` + `stop-gateway.ps1`（从 `config.json` 的 `listen` 解析端口 → 校验进程确为 wb2api 再结束，绝不误杀） |
+
+### 面板新增接口
+
+| 方法 | 路径 | 用途 |
+|---|---|---|
+| GET | `/panel/api/presets` | 预设库 + 模型绑定 + 目录状态（只读，可被面板轮询） |
+| POST | `/panel/api/presets` | 新增 / 更新预设（落盘 + 原子快照，不触发上游） |
+| DELETE | `/panel/api/presets/{id}` | 删除预设并清掉指向它的绑定 |
+| POST | `/panel/api/presets/import` | 导入外部格式预设 |
+| POST | `/panel/api/prompt/probe` | 注入自检探针 |
+
+预设库未注入时统一回 `501`，与面板其它可选子系统同一语义。
+
+### 构建与运行
+
+```bash
+go build -o wb2api ./cmd/server    # Go 1.26.10（go.mod 声明，setup-go 按它拉工具链）
+./wb2api                           # 监听 127.0.0.1:7863，面板 /panel/
+```
+
+Windows 直接双击 `启动网关.cmd`；首次启动无 `config.json` 时会自动生成一份（含 `crypto/rand` 随机 `api_key`）。
+
+```bash
+docker build -t wb2api-panel . && docker run -p 7863:7863 -v "$PWD/data:/app/data" wb2api-panel
+```
+
+### CI 与产物
+
+| 工作流 | 触发 | 产物 |
+|---|---|---|
+| `binaries.yml` | push / PR / 手动 | `go test ./...` + 官方头对拍 + 6 个平台包（windows/linux/darwin × amd64/arm64）；只有打 `v*` 标签才 `gh release create` |
+| `docker-ghcr.yml` | push / PR（限构建相关文件）/ 手动 | 多架构镜像 `ghcr.io/kevin6giao/workbuddy`（`latest` / 分支名 / `sha-*` / 标签同名） |
+
+发版按 [AGENTS.md](AGENTS.md)：`v<年.月.日.时分>`（上海时间，月日与时不补零、分两位），标签、Release、二进制共用同一个号。
 
 ## 核心能力
 
@@ -494,7 +525,7 @@ DMG 未公证，首次打开需要右键 →「打开」。
 
 ## 🆚 与上游的差异
 
-本分支相对 [上游 master](https://github.com/Sliverkiss/workbuddy2api) 的增量（均已在真实多账号环境验证）：
+本分支相对 [上游 master](https://github.com/Sliverkiss/workbuddy2api) 的增量（均已在真实多账号环境验证）。下表是**面板版就已有**的部分；本仓库在它之上再加的改动（提示词预设层、注入自检、抢救轨迹）见[本仓库（衍生说明）](#本仓库衍生说明)。
 
 ### 新增
 
